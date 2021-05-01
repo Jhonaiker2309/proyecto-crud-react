@@ -52,7 +52,7 @@ export default class App extends Component {
     let initialValue = firstDay + firstMonth * 1000 + firstYear * 1000000;
     let secondValue = secondDay + secondMonth * 1000 + secondYear * 1000000;
 
-    this.setState({initialValue, secondValue})
+    this.setState({ initialValue, secondValue });
   };
 
   addElementsOfDateToAPI = (data) => {
@@ -65,7 +65,7 @@ export default class App extends Component {
 
   editar = (e) => {
     let i = 0;
-    let newDate = new Date().toISOString()
+    let newDate = new Date().toISOString();
     let newDataOfApi = this.state.dataOfApi;
     newDataOfApi.map((element) => {
       if (element.id === e.id) {
@@ -83,7 +83,7 @@ export default class App extends Component {
 
   borrar = (id) => {
     let newData = this.state.dataOfApi.filter((data) => data.id !== id);
-    console.log(this.state.dataShowed)
+    console.log(this.state.dataShowed);
     this.setState({ dataOfApi: newData });
   };
 
@@ -110,11 +110,16 @@ export default class App extends Component {
 
   insertar = () => {
     let valorNuevo = { ...this.state.form };
-    valorNuevo.id =this.state.dataOfApi[this.state.dataOfApi.length - 1].id + 1;
-    let newDate = new Date().toISOString()
-    console.log(newDate)
-    valorNuevo.created_at = newDate 
-    valorNuevo.updated_at = newDate
+    if (this.state.dataOfApi.length == 0) {
+      valorNuevo.id = 1;
+    } else {
+      valorNuevo.id = this.state.dataOfApi[this.state.dataOfApi.length - 1].id + 1;
+    }
+
+    let newDate = new Date().toISOString();
+    console.log(newDate);
+    valorNuevo.created_at = newDate;
+    valorNuevo.updated_at = newDate;
     var lista = this.state.dataOfApi;
     lista.push(valorNuevo);
     lista.map((element) => {
@@ -122,7 +127,7 @@ export default class App extends Component {
       element.valueOfMonth = parseInt(element.created_at.slice(5, 7));
       element.valueOfYear = parseInt(element.created_at.slice(0, 4));
     });
-    console.log(lista)
+    console.log(lista);
     this.setState({ modalInsertar: false, dataOfApi: lista });
   };
 
